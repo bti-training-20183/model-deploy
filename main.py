@@ -2,7 +2,7 @@ import config
 import os
 import sys
 sys.path.append(os.getcwd())
-from utils.message_handler import MessageHdlr
+from utils.message_handler import MessageHandler
 
 
 
@@ -20,5 +20,6 @@ class Deployer:
         MessageHdlr.consumeMessage(queue, callback)
 
 if __name__ == "__main__":
+    MessageHdlr = MessageHandler(config.RABBITMQ_CONNECTION)
     model_deployer = Deployer()
     model_deployer.listen(config.QUEUE["from_creator"])
