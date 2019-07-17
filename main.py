@@ -17,7 +17,7 @@ def callback(channel, method, properties, body):
     to_path = 'tmp/' + msg['name'] + msg['type']
     Minio_Handler.download(from_path, to_path)
     from_path = to_path
-    to_path = msg['file_uri']
+    to_path = msg['name'] + '/model/' + msg['name'] + msg['type']
     S3_Handler.upload(from_path, to_path)
     os.remove(from_path)
     # Message_Handler.sendMessage('from_deployer', "Missing message headers")
