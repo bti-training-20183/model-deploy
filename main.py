@@ -19,6 +19,7 @@ def callback(channel, method, properties, body):
     from_path = to_path
     to_path = msg['file_uri']
     S3_Handler.upload(from_path, to_path)
+    os.remove(from_path)
     # Message_Handler.sendMessage('from_deployer', "Missing message headers")
 
 
