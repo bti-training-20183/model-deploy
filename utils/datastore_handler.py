@@ -7,13 +7,13 @@ from minio.error import (ResponseError, BucketAlreadyOwnedByYou,
                          BucketAlreadyExists)
 sys.path.append(os.getcwd())
 
-class DataStoreHandle:
-    def __init__(self, bucket_name):
+class DataStoreHandler:
+    def __init__(self, bucket_name, access_key, secret_key):
         self.bucket_name = bucket_name
         self.minioClient = Minio(
                     config.MINIO_URL,
-                    access_key=config.MINIO_ACCESS_KEY,
-                    secret_key=config.MINIO_SECRET_KEY,
+                    access_key=access_key,
+                    secret_key=secret_key,
                     secure=True)        
         # Make a bucket with the make_bucket API call.
         try:
@@ -38,5 +38,3 @@ class DataStoreHandle:
             return file_uri, file_name
         except ResponseError as err:
             return err, None
-            print(err)
-

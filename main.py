@@ -3,7 +3,7 @@ import os
 import sys
 import pymongo
 from minio import Minio
-from utils.datastore_handle import DataStoreHandle
+from utils.datastore_handler import DataStoreHandler
 sys.path.append(os.getcwd())
 from utils.message_handler import MessageHandler
 
@@ -11,11 +11,13 @@ from utils.message_handler import MessageHandler
 
 def callback(channel, method, properties, body):
     print(f'[x] Received {body} from {properties}')
-    bucketName = "file-storage"
-    minioClient = DataStoreHandle(bucket_name=bucketName)
     if 'filename' in properties.headers:
-        file_link, name = minioClient.save(properties.headers['filename'], body)
-        MessageHdlr.sendMessage('from_deployer', file_link)
+        file_uri, file_name = minioClient.save(properties.headers['filename'], body)
+        msg = {
+            "file_uri": file_uri,
+            "file_name": file_name
+        } 
+        MessageHdlr.sendMessage('from_deployer', msg)
     else:
         MessageHdlr.sendMessage('from_deployer',"Missing message headers")
         print("Headers filename not found")
@@ -30,5 +32,6 @@ class Deployer:
 
 if __name__ == "__main__":
     MessageHdlr = MessageHandler(config.RABBITMQ_CONNECTION)
+    minioClient = DataStoreHandler('model-storage', config.MINIO_ACCESS_KEY, config.MINIO_SECRET_KEY)
     model_deployer = Deployer()
     model_deployer.listen(config.QUEUE["from_creator"])
