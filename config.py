@@ -10,14 +10,18 @@ MINIO_URL = environ["MINIO_URL"] if environ.get(
     "MINIO_URL") else "play.min.io:9000"
 MINIO_BUCKET = environ["MINIO_BUCKET"] if environ.get(
     "MINIO_BUCKET") else "brains"
-MONGO_URL = environ["MONGO_URL"] if environ.get("MONGO_URL") else "mongodb://localhost:27017" 
+MONGO_URL = environ["MONGO_URL"] if environ.get(
+    "MONGO_URL") else "mongodb://localhost:27017"
 MONGO_DB = environ["MONGO_DB"] if environ.get("MONGO_DB") else "logsDB"
-MONGO_COLLECTION = environ["MONGO_COLLECTION"] if environ.get("MONGO_COLLECTION") else "preprocessor"
-S3_ENDPOINT = environ["S3_ENDPOINT"] if environ.get("S3_ENDPOINT") else "s3.amazonaws.com"
+MONGO_COLLECTION = environ["MONGO_COLLECTION"] if environ.get(
+    "MONGO_COLLECTION") else "preprocessor"
+S3_ENDPOINT = environ["S3_ENDPOINT"] if environ.get(
+    "S3_ENDPOINT") else "s3.amazonaws.com"
 S3_ACCESS_KEY = environ.get("S3_ACCESS_KEY")
 S3_SECRET_KEY = environ.get("S3_SECRET_KEY")
 S3_BUCKET = environ["S3_BUCKET"] if environ.get(
     "S3_BUCKET") else "brains"
+EDGE_ENDPOINT = environ["EDGE_ENDPOINT"] if environ.get("EDGE_ENDPOINT") else "localhost:8001"
 
 QUEUE = {
     "from_client": "from_client",

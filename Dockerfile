@@ -1,5 +1,4 @@
-FROM python:latest
-RUN mkdir /app
+FROM btiintern/python
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
