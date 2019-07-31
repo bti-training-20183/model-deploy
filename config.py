@@ -21,8 +21,8 @@ S3_ACCESS_KEY = environ.get("S3_ACCESS_KEY")
 S3_SECRET_KEY = environ.get("S3_SECRET_KEY")
 S3_BUCKET = environ["S3_BUCKET"] if environ.get(
     "S3_BUCKET") else "brains"
-EDGE_ENDPOINT = environ["EDGE_ENDPOINT"] if environ.get("EDGE_ENDPOINT") else "localhost:8001"
-
+EDGE_ENDPOINT = environ["EDGE_ENDPOINT"] if environ.get(
+    "EDGE_ENDPOINT") else "localhost:8001"
 QUEUE = {
     "from_client": "from_client",
     "from_preprocessor": "from_preprocessor",

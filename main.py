@@ -55,6 +55,7 @@ class Deployer:
 if __name__ == "__main__":
     if not os.path.exists('tmp'):
         os.makedirs('tmp')
+    print(config.EDGE_ENDPOINT)
     tf.compat.v1.disable_eager_execution()
     model_deployer = Deployer()
     model_deployer.listen(config.QUEUE["from_creator"])
