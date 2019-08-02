@@ -12,6 +12,7 @@ import tensorflow as tf
 import tensorflowjs as tfjs
 from keras.models import load_model
 import requests
+import time
 sys.path.append(os.getcwd())
 
 
@@ -30,7 +31,10 @@ def callback(channel, method, properties, body):
     logs = {
         'name': msg['name'],
         'type': msg['type'],
-        'file_uri': msg['name'] + '/model/' + msg['name'] + msg['type']
+        'file_uri': msg['name'] + '/model/' + msg['name'] + msg['type'],
+        'date': time.strftime("%Y-%m-%d %H:%M:%S"),
+        'algorithm': msg.get('algorithm', ''),
+        'creator_id': msg.get('creator_id', '')
     }
     data = {
         'name': msg['name'],
