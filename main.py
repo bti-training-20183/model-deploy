@@ -18,34 +18,33 @@ sys.path.append(os.getcwd())
 
 def callback(channel, method, properties, body):
     print(f'[x] Received {body} from {properties}')
-    msg = json.loads(body)
-    from_path = msg['file_uri']
-    to_path = 'tmp/' + msg['name'] + msg['type']
+    received_msg = json.loads(body)
+    from_path = received_msg['file_uri']
+    to_path = 'tmp/' + received_msg['name'] + received_msg['type']
     Minio_Handler.download(from_path, to_path)
     from_path = to_path
-    dest = msg['name'] + '/model/'
+    dest = received_msg['name'] + '/model/'
 
     for filename in os.listdir('tmp/'):
         S3_Handler.upload('tmp/'+filename, dest + filename)
         os.remove('tmp/'+filename)
     logs = {
-        'name': msg['name'],
-        'type': msg['type'],
-        'file_uri': msg['name'] + '/model/' + msg['name'] + msg['type'],
+        'name': received_msg['name'],
+        'type': received_msg['type'],
+        'file_uri': received_msg['name'] + '/model/' + received_msg['name'] + received_msg['type'],
         'date': time.strftime("%Y-%m-%d %H:%M:%S"),
-        'algorithm': msg.get('algorithm', ''),
-        'creator_id': msg.get('creator_id', '')
+        'creator_id': received_msg.get('creator_id', '')
     }
+    Database_Handler.insert(logs)
     data = {
-        'name': msg['name'],
-        'type': msg['type'],
-        'file_uri': msg['name'] + '/model/' + msg['name'] + msg['type'],
+        'name': received_msg['name'],
+        'type': received_msg['type'],
+        'file_uri': received_msg['name'] + '/model/' + received_msg['name'] + received_msg['type'],
         'S3_ACCESS_KEY': config.S3_ACCESS_KEY,
         'S3_SECRET_KEY': config.S3_SECRET_KEY,
         'S3_BUCKET': config.S3_BUCKET
     }
     r = requests.post(url=config.EDGE_ENDPOINT, data=json.dumps(data))
-    Database_Handler.insert(logs)
 
 
 class Deployer:
