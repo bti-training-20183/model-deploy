@@ -35,7 +35,7 @@ def callback(channel, method, properties, body):
         'date': time.strftime("%Y-%m-%d %H:%M:%S"),
         'creator_id': received_msg.get('creator_id', '')
     }
-    Database_Handler.insert(logs)
+    Database_Handler.insert(config.MONGO_COLLECTION, logs)
     data = {
         'name': received_msg['name'],
         'type': received_msg['type'],
