@@ -2,7 +2,7 @@ pika==1.0.1
 six==1.11.0
 pymongo==3.8.0
 minio==4.0.18
-tensorflow==1.15.2
+tensorflow==2.3.1
 Keras==2.2.4
 h5py==2.8.0
 tensorflowjs==1.2.3
